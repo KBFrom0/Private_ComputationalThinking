@@ -70,11 +70,29 @@ $("btn-login").addEventListener("click", () =>
 );
 $("btn-logout").addEventListener("click", () => fb.logout());
 
+$("btn-email-toggle").addEventListener("click", () => {
+  $("email-form").hidden = !$("email-form").hidden;
+});
+
+$("email-form").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const email = $("email-input").value.trim();
+  const password = $("password-input").value;
+  const register = e.submitter?.dataset.mode === "register";
+  try {
+    await (register ? fb.registerWithEmail(email, password) : fb.loginWithEmail(email, password));
+    $("email-form").reset();
+    $("email-form").hidden = true;
+  } catch (err) {
+    alert((register ? "Đăng ký" : "Đăng nhập") + " thất bại: " + err.message);
+  }
+});
+
 function handleUserChanged(user) {
   state.user = user;
-  $("btn-login").hidden = !!user;
+  $("btn-login").hidden = $("btn-email-toggle").hidden = !!user;
   $("btn-logout").hidden = !user;
-  $("user-name").textContent = user ? `👋 ${user.displayName}` : "";
+  $("user-name").textContent = user ? `👋 ${user.displayName || user.email}` : "";
 
   state.unsubscribe?.();
   state.unsubscribe = null;
@@ -249,6 +267,6 @@ if (fb.isConfigured) {
   $("notice").hidden = false;
   $("notice").textContent =
     "⚠️ Chưa cấu hình Firebase (js/config.js). Chức năng dịch vẫn dùng được, nhưng chưa thể đăng nhập và lưu từ.";
-  $("btn-login").disabled = true;
+  $("btn-login").disabled = $("btn-email-toggle").disabled = true;
   renderWords();
 }

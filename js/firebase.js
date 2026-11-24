@@ -3,6 +3,9 @@ import {
   getAuth,
   GoogleAuthProvider,
   signInWithPopup,
+  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
+  updateProfile,
   signOut,
   onAuthStateChanged,
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
@@ -31,6 +34,15 @@ if (isConfigured) {
 
 // ---------- Authentication ----------
 export const login = () => signInWithPopup(auth, new GoogleAuthProvider());
+export const loginWithEmail = (email, password) =>
+  signInWithEmailAndPassword(auth, email, password);
+
+export async function registerWithEmail(email, password) {
+  const cred = await createUserWithEmailAndPassword(auth, email, password);
+  // Lấy phần trước @ làm tên hiển thị
+  await updateProfile(cred.user, { displayName: email.split("@")[0] });
+  return cred;
+}
 export const logout = () => signOut(auth);
 export const onUserChanged = (callback) => onAuthStateChanged(auth, callback);
 

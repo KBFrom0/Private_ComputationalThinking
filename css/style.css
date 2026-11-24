@@ -33,6 +33,20 @@ body {
 #auth-box { display: flex; align-items: center; gap: 10px; }
 #btn-login { background: #fff; color: var(--primary); font-weight: 600; }
 
+.email-form {
+  max-width: 820px;
+  margin: 16px auto 0;
+  padding: 12px 16px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  background: var(--card);
+  border-radius: var(--radius);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, .08);
+}
+.email-form input { flex: 1 1 180px; width: auto; padding: 9px; border: 1px solid var(--border); border-radius: 8px; font: inherit; }
+.email-form .btn-ghost { color: var(--primary); }
+
 main {
   max-width: 820px;
   margin: 20px auto;

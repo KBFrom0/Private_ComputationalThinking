@@ -13,9 +13,17 @@
     <div id="auth-box">
       <span id="user-name"></span>
       <button id="btn-login" class="btn">Đăng nhập Google</button>
+      <button id="btn-email-toggle" class="btn btn-ghost">Email</button>
       <button id="btn-logout" class="btn btn-ghost" hidden>Đăng xuất</button>
     </div>
   </header>
+
+  <form id="email-form" class="email-form" hidden>
+    <input id="email-input" type="email" placeholder="Email" autocomplete="email" required>
+    <input id="password-input" type="password" placeholder="Mật khẩu (≥ 6 ký tự)" autocomplete="current-password" minlength="6" required>
+    <button type="submit" class="btn" data-mode="login">Đăng nhập</button>
+    <button type="submit" class="btn btn-ghost" data-mode="register">Đăng ký</button>
+  </form>
 
   <div id="notice" class="notice" hidden></div>
 
