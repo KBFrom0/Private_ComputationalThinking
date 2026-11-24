@@ -1,0 +1,52 @@
+1
+00:00:00,000 --> 00:00:04,562
+Smart Vocab - a smart vocabulary notebook built with Google Translate API and Firebase
+
+2
+00:00:04,612 --> 00:00:10,257
+Step 1: Translate a word using Google Translate API (source language is auto-detected)
+
+3
+00:00:10,307 --> 00:00:17,906
+It also translates full sentences, e.g. Vietnamese to Japanese
+
+4
+00:00:17,956 --> 00:00:33,929
+Step 2: Sign in with Firebase Authentication (Email/Password - Google Sign-In is also supported)
+
+5
+00:00:33,979 --> 00:00:47,799
+Step 3: Save translated words to Cloud Firestore - each user has a private notebook
+
+6
+00:00:47,849 --> 00:00:52,705
+The notebook updates in realtime via Firestore onSnapshot - data lives at users/{uid}/words
+
+7
+00:00:52,755 --> 00:00:57,041
+Search words in the notebook
+
+8
+00:00:57,091 --> 00:01:10,547
+Mark a word as learned, then filter by "Learning" / "Learned"
+
+9
+00:01:10,597 --> 00:01:24,418
+Step 4: Review with flashcards - click the card to flip and see the meaning
+
+10
+00:01:24,468 --> 00:01:38,893
+"Learned" / "Not yet" updates the word status and review count in Firestore
+
+11
+00:01:38,943 --> 00:01:46,125
+Data is stored in the cloud: after reloading the page, the notebook is still there
+
+12
+00:01:46,175 --> 00:01:49,626
+Sign out - the notebook is private and is hidden when logged out
+
+13
+00:01:49,676 --> 00:01:57,600
+Live demo: https://smart-vocab-d4665.web.app - Thank you for watching!
+

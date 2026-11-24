@@ -2,9 +2,13 @@
 
 Web app giúp tra nghĩa bằng **Google Translate API**, lưu từ vào sổ từ cá nhân trên **Firebase** (Authentication + Cloud Firestore) và ôn tập bằng **Flashcard**.
 
+- 🌐 **Live demo:** https://smart-vocab-d4665.web.app
+- 🎬 **Video demo (phụ đề tiếng Anh):** [`docs/demo.mp4`](docs/demo.mp4)
+- 📄 **Báo cáo:** [`docs/REPORT.md`](docs/REPORT.md) · [`docs/REPORT.pdf`](docs/REPORT.pdf)
+
 ## Chức năng
 1. **Tra & dịch**: dịch từ hoặc câu giữa 8 ngôn ngữ, tự nhận diện ngôn ngữ nguồn.
-2. **Đăng nhập Google** (Firebase Authentication).
+2. **Đăng nhập** bằng Google hoặc Email/Mật khẩu (Firebase Authentication).
 3. **Sổ từ cá nhân** (Cloud Firestore): lưu, xóa, tìm kiếm, lọc, đánh dấu "đã thuộc". Dữ liệu đồng bộ realtime.
 4. **Flashcard**: lật thẻ để xem nghĩa, đánh dấu "đã thuộc" hoặc "chưa thuộc".
 
@@ -32,7 +36,7 @@ cp js/config.example.js js/config.js
 
 ### 2. Firebase
 1. Vào https://console.firebase.google.com và tạo project.
-2. **Build → Authentication → Sign-in method** và bật **Google**.
+2. **Build → Authentication → Sign-in method** và bật **Google** và **Email/Password**.
 3. **Build → Firestore Database → Create database**, rồi dán nội dung `firestore.rules` vào tab **Rules**.
 4. **Project settings → Your apps → Web (</>)**, rồi copy `firebaseConfig` vào `js/config.js`.
 
