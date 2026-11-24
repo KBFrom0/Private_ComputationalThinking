@@ -140,6 +140,8 @@ function renderWords() {
       ? "Không có từ nào khớp."
       : "Sổ từ trống – hãy dịch và lưu từ đầu tiên!";
 
+  refreshFlashcardIfStale();
+
   for (const w of words) {
     const li = document.createElement("li");
     li.className = "word-item" + (w.learned ? " learned" : "");
@@ -167,6 +169,71 @@ function renderWords() {
     list.appendChild(li);
   }
 }
+
+// ---------- Flashcard ----------
+let currentCard = null;
+
+function pickNextCard() {
+  const pool = state.words.filter((w) => !w.learned && w.id !== currentCard?.id);
+  // Nếu chỉ còn 1 từ chưa thuộc thì cho phép lặp lại từ đó
+  const candidates = pool.length ? pool : state.words.filter((w) => !w.learned);
+  currentCard = candidates[Math.floor(Math.random() * candidates.length)] || null;
+  showCard();
+}
+
+function showCard() {
+  $("flashcard").classList.remove("flipped");
+  const remaining = state.words.filter((w) => !w.learned).length;
+
+  if (!currentCard) {
+    $("fc-front").textContent = state.words.length
+      ? "🎉 Bạn đã thuộc hết các từ!"
+      : "Chưa có từ để ôn";
+    $("fc-back").textContent = "";
+  } else {
+    $("fc-front").textContent = currentCard.text;
+    // Chờ hiệu ứng lật xong mới đổi mặt sau, tránh lộ đáp án
+    setTimeout(() => {
+      $("fc-back").textContent = currentCard?.translated ?? "";
+    }, 250);
+  }
+  $("fc-progress").textContent = state.words.length
+    ? `Còn ${remaining}/${state.words.length} từ chưa thuộc · bấm thẻ để lật`
+    : "";
+  $("btn-fc-again").disabled = $("btn-fc-know").disabled = !currentCard;
+}
+
+// Gọi mỗi khi danh sách từ thay đổi: đổi thẻ nếu thẻ hiện tại không còn hợp lệ
+function refreshFlashcardIfStale() {
+  const fresh = currentCard && state.words.find((w) => w.id === currentCard.id);
+  if (!fresh || fresh.learned) {
+    currentCard = null;
+    pickNextCard();
+  } else {
+    currentCard = fresh;
+    $("fc-progress").textContent =
+      `Còn ${state.words.filter((w) => !w.learned).length}/${state.words.length} từ chưa thuộc · bấm thẻ để lật`;
+  }
+}
+
+$("flashcard").addEventListener("click", () => {
+  if (currentCard) $("flashcard").classList.toggle("flipped");
+});
+
+$("btn-fc-again").addEventListener("click", () => {
+  fb.updateWord(state.user.uid, currentCard.id, {
+    reviewCount: (currentCard.reviewCount || 0) + 1,
+  });
+  pickNextCard();
+});
+
+$("btn-fc-know").addEventListener("click", () => {
+  fb.updateWord(state.user.uid, currentCard.id, {
+    learned: true,
+    reviewCount: (currentCard.reviewCount || 0) + 1,
+  });
+  // onSnapshot sẽ cập nhật state.words và tự chọn thẻ mới
+});
 
 $("search").addEventListener("input", renderWords);
 document
