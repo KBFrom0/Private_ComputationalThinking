@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Smart Vocab – Sổ từ vựng thông minh</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <h1>📘 Smart Vocab</h1>
+    <div id="auth-box">
+      <span id="user-name"></span>
+      <button id="btn-login" class="btn">Đăng nhập Google</button>
+      <button id="btn-logout" class="btn btn-ghost" hidden>Đăng xuất</button>
+    </div>
+  </header>
+
+  <div id="notice" class="notice" hidden></div>
+
+  <main>
+    <!-- Dịch -->
+    <section class="card">
+      <h2>1. Tra &amp; dịch</h2>
+      <div class="lang-row">
+        <select id="source-lang"></select>
+        <button id="btn-swap" class="btn btn-ghost" title="Đổi chiều">⇄</button>
+        <select id="target-lang"></select>
+      </div>
+      <textarea id="input-text" rows="3" placeholder="Nhập từ hoặc câu cần dịch..."></textarea>
+      <div class="actions">
+        <button id="btn-translate" class="btn">Dịch</button>
+      </div>
+      <div id="result" class="result" hidden>
+        <p class="result-text" id="result-text"></p>
+        <p class="muted" id="result-meta"></p>
+        <input id="note-input" type="text" placeholder="Ghi chú / ví dụ (không bắt buộc)">
+        <button id="btn-save" class="btn btn-accent">💾 Lưu vào sổ từ</button>
+      </div>
+    </section>
+
+    <!-- Sổ từ -->
+    <section class="card">
+      <div class="section-head">
+        <h2>2. Sổ từ của tôi <span id="word-count" class="badge">0</span></h2>
+        <input id="search" type="search" placeholder="Tìm từ...">
+      </div>
+      <div class="filters">
+        <label><input type="radio" name="filter" value="all" checked> Tất cả</label>
+        <label><input type="radio" name="filter" value="learning"> Đang học</label>
+        <label><input type="radio" name="filter" value="learned"> Đã thuộc</label>
+      </div>
+      <ul id="word-list" class="word-list"></ul>
+      <p id="empty-list" class="muted">Đăng nhập để lưu và xem sổ từ của bạn.</p>
+    </section>
+
+    <!-- Flashcard -->
+    <section class="card">
+      <h2>3. Ôn tập Flashcard</h2>
+      <div id="flashcard" class="flashcard" title="Bấm để lật thẻ">
+        <div class="fc-inner">
+          <div class="fc-front" id="fc-front">Chưa có từ để ôn</div>
+          <div class="fc-back" id="fc-back"></div>
+        </div>
+      </div>
+      <div class="actions center">
+        <button id="btn-fc-again" class="btn btn-ghost">❌ Chưa thuộc</button>
+        <button id="btn-fc-know" class="btn btn-accent">✅ Đã thuộc</button>
+      </div>
+      <p class="muted center" id="fc-progress"></p>
+    </section>
+  </main>
+
+  <footer class="muted center">Lab07 – Google Translate API &amp; Firebase API</footer>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,7 @@
+# Chứa API key thật – không commit
+js/config.js
+
+.firebase/
+node_modules/
+.DS_Store
+Thumbs.db
