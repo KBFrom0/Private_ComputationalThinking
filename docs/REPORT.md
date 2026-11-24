@@ -1,84 +1,84 @@
 # Lab07 – Google Translate API & Firebase API
 
-**Họ tên:** Nguyễn Đăng Khoa · **MSSV:** 23125084
+**Full name:** Nguyễn Đăng Khoa · **Student ID:** 23125084
 
-**Sản phẩm:** Smart Vocab – Sổ từ vựng thông minh
+**Product:** Smart Vocab – Smart Vocabulary Notebook
 
-| Mục | Link |
+| Item | Link |
 |---|---|
 | 🌐 Website (live) | https://smart-vocab-d4665.web.app |
 | 💻 Source code | https://github.com/KBFrom0/Private_ComputationalThinking |
-| 🎬 Video demo | https://github.com/KBFrom0/Private_ComputationalThinking/blob/main/docs/demo.mp4 |
+| 🎬 Demo video | https://github.com/KBFrom0/Private_ComputationalThinking/blob/main/docs/demo.mp4 |
 
 ---
 
-## 1. Explanation – Giới thiệu website
+## 1. Explanation – Website overview
 
-### 1.1 Ý tưởng
-Khi học ngoại ngữ, người học thường tra từ bằng Google Translate rồi quên ngay vì không có chỗ lưu lại để ôn. **Smart Vocab** gộp ba bước *tra từ → lưu từ → ôn tập* vào một website duy nhất:
+### 1.1 Idea
+When learning a foreign language, learners often look words up in Google Translate and forget them right away, because there is nowhere to save them for review. **Smart Vocab** combines three steps, *look up → save → review*, in a single website:
 
-- Tra nghĩa bằng **Google Translate API**.
-- Lưu vào sổ từ cá nhân trên đám mây bằng **Firebase (Authentication + Cloud Firestore)**, dùng được trên mọi thiết bị.
-- Ôn tập bằng **Flashcard** cho đến khi thuộc.
+- Look up meanings with the **Google Translate API**.
+- Save words to a personal cloud notebook with **Firebase (Authentication + Cloud Firestore)**, available on any device.
+- Review them with **flashcards** until they are learned.
 
-Website được triển khai trên **Firebase Hosting** tại https://smart-vocab-d4665.web.app.
+The website is deployed on **Firebase Hosting** at https://smart-vocab-d4665.web.app.
 
-### 1.2 Chức năng
+### 1.2 Features
 
-| # | Chức năng | Mô tả | API sử dụng |
-|---|-----------|-------|-------------|
-| 1 | Tra & dịch | Dịch từ/câu giữa 8 ngôn ngữ, tự nhận diện ngôn ngữ nguồn, đổi chiều dịch | Google Translate |
-| 2 | Đăng nhập | Đăng nhập bằng tài khoản Google hoặc Email/Mật khẩu (có đăng ký) | Firebase Authentication |
-| 3 | Lưu từ | Lưu từ kèm nghĩa và ghi chú, chặn lưu trùng | Cloud Firestore |
-| 4 | Quản lý sổ từ | Xem, tìm kiếm, lọc (đang học / đã thuộc), đánh dấu, xóa. Đồng bộ realtime | Cloud Firestore |
-| 5 | Flashcard | Lật thẻ xem nghĩa, đánh dấu "đã thuộc" / "chưa thuộc", đếm số lần ôn | Cloud Firestore |
-| 6 | Bảo mật dữ liệu | Mỗi người dùng chỉ đọc/ghi được sổ từ của mình | Firestore Security Rules |
+| # | Feature | Description | API used |
+|---|---------|-------------|----------|
+| 1 | Translate | Translate words/sentences between 8 languages, auto-detect the source language, swap direction | Google Translate |
+| 2 | Sign in | Sign in with a Google account or Email/Password (with registration) | Firebase Authentication |
+| 3 | Save words | Save a word with its meaning and an optional note; duplicates are blocked | Cloud Firestore |
+| 4 | Manage notebook | View, search, filter (learning / learned), mark, delete. Realtime sync | Cloud Firestore |
+| 5 | Flashcards | Flip a card to see the meaning, mark "learned" / "not yet", count reviews | Cloud Firestore |
+| 6 | Data security | Each user can only read/write their own notebook | Firestore Security Rules |
 
-### 1.3 Ảnh chụp màn hình
+### 1.3 Screenshots
 
-**Dịch từ bằng Google Translate API (tự nhận diện tiếng Anh → tiếng Việt):**
+**Translating a word with the Google Translate API (auto-detected English → Vietnamese):**
 
-![Dịch từ](images/01-translate.png)
+![Translate](images/01-translate.png)
 
-**Lưu từ vào sổ trên Cloud Firestore:**
+**Saving words to the notebook on Cloud Firestore:**
 
-![Lưu từ](images/02-save-words.png)
+![Save words](images/02-save-words.png)
 
-**Tìm kiếm, lọc và đánh dấu "đã thuộc":**
+**Searching, filtering, and marking words as learned:**
 
-![Lọc từ](images/03-filter.png)
+![Filter](images/03-filter.png)
 
-**Ôn tập bằng Flashcard:**
+**Reviewing with flashcards:**
 
 ![Flashcard](images/04-flashcard.png)
 
-### 1.4 Kiến trúc
+### 1.4 Architecture
 
 ```
-Trình duyệt (HTML/CSS/JavaScript thuần, ES Modules)
+Browser (plain HTML/CSS/JavaScript, ES Modules)
  ├── js/translate.js ──HTTP──► Google Translate API
  └── js/firebase.js  ──SDK───► Firebase Authentication (Google, Email/Password)
                               └► Cloud Firestore: users/{uid}/words/{wordId}
-Triển khai: Firebase Hosting
+Deployment: Firebase Hosting
 ```
 
-| File | Vai trò |
-|------|---------|
-| `index.html`, `css/style.css` | Giao diện |
-| `js/app.js` | Xử lý sự kiện, hiển thị sổ từ, flashcard |
-| `js/translate.js` | Gọi Google Translate API |
-| `js/firebase.js` | Khởi tạo Firebase, Auth và các thao tác Firestore |
-| `js/config.js` | Cấu hình Firebase và API key (không commit, đã `.gitignore`) |
-| `firestore.rules` | Luật bảo mật Firestore |
-| `firebase.json`, `.firebaserc` | Cấu hình triển khai Firebase |
+| File | Role |
+|------|------|
+| `index.html`, `css/style.css` | User interface |
+| `js/app.js` | Event handling, notebook rendering, flashcards |
+| `js/translate.js` | Google Translate API calls |
+| `js/firebase.js` | Firebase initialization, Auth, and Firestore operations |
+| `js/config.js` | Firebase config and API key (not committed, listed in `.gitignore`) |
+| `firestore.rules` | Firestore security rules |
+| `firebase.json`, `.firebaserc` | Firebase deployment config |
 
-Website là **ứng dụng tĩnh, không cần backend riêng**: mọi logic chạy ở trình duyệt, dữ liệu lưu trên Firestore và được bảo vệ bằng Security Rules.
+The website is a **static app with no custom backend**: all logic runs in the browser, and data is stored in Firestore and protected by Security Rules.
 
-### 1.5 Tích hợp Google Translate API (`js/translate.js`)
+### 1.5 Google Translate API integration (`js/translate.js`)
 
-Hàm `translate(text, target, source)` hỗ trợ hai cách gọi:
+The function `translate(text, target, source)` supports two ways of calling the API:
 
-**a) Google Cloud Translation API v2 (chính thức, dùng API key):**
+**a) Google Cloud Translation API v2 (official, uses an API key):**
 ```js
 const res = await fetch(
   `https://translation.googleapis.com/language/translate/v2?key=${TRANSLATE_API_KEY}`,
@@ -92,19 +92,19 @@ const t = (await res.json()).data.translations[0];
 // t.translatedText, t.detectedSourceLanguage
 ```
 
-**b) Endpoint công khai của Google Translate (khi chưa có API key):**
+**b) Public Google Translate endpoint (used when no API key is set):**
 ```js
 const params = new URLSearchParams({ client: "gtx", sl: source, tl: target, dt: "t", q: text });
 const data = await (await fetch(`https://translate.googleapis.com/translate_a/single?${params}`)).json();
-// data[0] = các đoạn đã dịch, data[2] = ngôn ngữ nguồn nhận diện được
+// data[0] = translated segments, data[2] = detected source language
 ```
 
-- Khi chọn "Tự nhận diện", API trả về ngôn ngữ nguồn. Giá trị này được hiển thị (ví dụ *Tiếng Anh → Tiếng Việt*) và lưu kèm từ.
-- Bản demo dùng cách (b). Để chuyển sang Cloud Translation API chỉ cần điền `TRANSLATE_API_KEY` trong `js/config.js`, không phải sửa code.
+- When "Auto-detect" is selected, the API returns the source language. It is displayed to the user (e.g. *English → Vietnamese*) and saved with the word.
+- The demo uses option (b). Switching to the Cloud Translation API only requires filling in `TRANSLATE_API_KEY` in `js/config.js`; no code changes are needed.
 
-### 1.6 Tích hợp Firebase (`js/firebase.js`)
+### 1.6 Firebase integration (`js/firebase.js`)
 
-**Authentication:** hỗ trợ 2 phương thức, theo dõi trạng thái đăng nhập bằng `onAuthStateChanged`.
+**Authentication:** two sign-in methods are supported, and the sign-in state is tracked with `onAuthStateChanged`.
 ```js
 export const login = () => signInWithPopup(auth, new GoogleAuthProvider());
 export const loginWithEmail = (email, password) =>
@@ -112,66 +112,68 @@ export const loginWithEmail = (email, password) =>
 export const onUserChanged = (cb) => onAuthStateChanged(auth, cb);
 ```
 
-**Cloud Firestore:** mỗi người dùng có một sub-collection riêng `users/{uid}/words`.
+**Cloud Firestore:** each user has their own sub-collection `users/{uid}/words`.
 ```js
 addDoc(collection(db, "users", uid, "words"), {
   text, translated, source, target, note,
   learned: false, reviewCount: 0, createdAt: serverTimestamp(),
 });
 ```
-- **Đọc realtime** bằng `onSnapshot` (sắp xếp theo `createdAt`). Khi thêm, xóa hoặc đánh dấu, giao diện tự cập nhật trên mọi tab và thiết bị.
-- **Cập nhật** bằng `updateDoc` (trạng thái `learned`, `reviewCount` khi ôn flashcard), **xóa** bằng `deleteDoc`.
+- **Realtime reads** with `onSnapshot` (ordered by `createdAt`). When a word is added, deleted, or marked, the UI updates automatically on every tab and device.
+- **Updates** with `updateDoc` (the `learned` status, and `reviewCount` during flashcard review); **deletes** with `deleteDoc`.
 
-**Security Rules** (`firestore.rules`): người dùng phải đăng nhập và chỉ truy cập được dữ liệu có `userId` trùng với `uid` của mình.
+**Security Rules** (`firestore.rules`): users must be signed in and can only access data whose `userId` matches their own `uid`.
 ```
 match /users/{userId}/words/{wordId} {
   allow read, write: if request.auth != null && request.auth.uid == userId;
 }
 ```
 
-**Firebase Hosting:** triển khai bằng `firebase deploy --only hosting`.
+**Firebase Hosting:** deployed with `firebase deploy --only hosting`.
 
-### 1.7 Hướng dẫn chạy
-Xem chi tiết trong `README.md`. Tóm tắt:
-1. `cp js/config.example.js js/config.js`, rồi điền `firebaseConfig` (và `TRANSLATE_API_KEY` nếu có).
-2. Trong Firebase Console: bật Authentication (Google, Email/Password), tạo Firestore và áp dụng `firestore.rules`.
-3. Chạy local bằng `npx serve .`, hoặc triển khai bằng `firebase deploy`.
+### 1.7 How to run
+See `README.md` for details. In short:
+1. `cp js/config.example.js js/config.js`, then fill in `firebaseConfig` (and `TRANSLATE_API_KEY` if available).
+2. In the Firebase Console: enable Authentication (Google, Email/Password), create Firestore, and apply `firestore.rules`.
+3. Run locally with `npx serve .`, or deploy with `firebase deploy`.
 
 ---
 
 ## 2. Source Code
 - Repository: https://github.com/KBFrom0/Private_ComputationalThinking
-- Các file chính: `index.html`, `css/style.css`, `js/app.js`, `js/translate.js`, `js/firebase.js`, `firestore.rules`, `firebase.json`.
+- Main files: `index.html`, `css/style.css`, `js/app.js`, `js/translate.js`, `js/firebase.js`, `firestore.rules`, `firebase.json`.
 
 ## 3. Video Demonstration
-- Video (khoảng 2 phút, phụ đề tiếng Anh): https://github.com/KBFrom0/Private_ComputationalThinking/blob/main/docs/demo.mp4
-- File phụ đề riêng: `docs/demo-subtitles-en.srt`
-- Nội dung video:
-  1. Dịch từ *serendipity* (tự nhận diện tiếng Anh → tiếng Việt), dịch câu tiếng Việt → tiếng Nhật.
-  2. Đăng nhập bằng Firebase Authentication (Email/Password).
-  3. Dịch và lưu 5 từ vào Cloud Firestore, có ghi chú.
-  4. Tìm kiếm, đánh dấu đã thuộc, lọc theo trạng thái.
-  5. Ôn tập bằng Flashcard.
-  6. Tải lại trang để thấy dữ liệu vẫn còn trên cloud, sau đó đăng xuất.
+- Video (about 2 minutes, English subtitles): https://github.com/KBFrom0/Private_ComputationalThinking/blob/main/docs/demo.mp4
+- Separate subtitle file: `docs/demo-subtitles-en.srt`
+- Video content:
+  1. Translate the word *serendipity* (auto-detected English → Vietnamese), then a Vietnamese sentence → Japanese.
+  2. Sign in with Firebase Authentication (Email/Password).
+  3. Translate and save 5 words to Cloud Firestore, with notes.
+  4. Search, mark a word as learned, and filter by status.
+  5. Review with flashcards.
+  6. Reload the page to show the data is still in the cloud, then sign out.
 
 ## 4. AI Usage Declaration
-Trong quá trình làm bài, em sử dụng công cụ AI **Claude Code (mô hình Claude Opus 5.5 của Anthropic)** với vai trò trợ lý lập trình:
+During this lab, I used the AI tool **Claude Code (Anthropic's Claude Opus 5.5 model)** as a programming assistant:
 
-| Hạng mục | AI hỗ trợ | Em thực hiện |
-|----------|-----------|--------------|
-| Ý tưởng | Gợi ý 5 ý tưởng đề tài | Chọn đề tài *Sổ từ vựng thông minh* |
-| Mã nguồn | Sinh mã HTML/CSS/JS, module Translate, Firebase Auth/Firestore, Flashcard, đăng nhập Email | Đọc hiểu, chạy thử và kiểm tra chức năng |
-| Cấu hình Firebase | Tạo web app, Firestore, deploy rules và hosting qua Firebase CLI | Tạo project Firebase, đăng nhập CLI, bật Google và Email/Password trong Console |
-| Kiểm thử | Chạy thử trên trình duyệt, phát hiện và sửa lỗi giao diện | Kiểm tra lại trên trình duyệt của mình |
-| Video demo | Điều khiển trình duyệt tự động để quay video, tạo phụ đề tiếng Anh | Xem lại video |
-| Tài liệu | Soạn README, báo cáo này, xuất PDF | Cung cấp thông tin cá nhân, xem lại nội dung |
+| Area | AI assistance | My work |
+|------|---------------|---------|
+| Idea | Suggested 5 project ideas | Chose the *Smart Vocabulary Notebook* project |
+| Source code | Generated the HTML/CSS/JS, the Translate module, Firebase Auth/Firestore, flashcards, and email sign-in | Read and understood the code, ran it, and tested the features |
+| Firebase setup | Created the web app and Firestore, deployed rules and hosting via the Firebase CLI | Created the Firebase project, signed in to the CLI, enabled Google and Email/Password in the Console |
+| Testing | Tested in the browser, found and fixed UI bugs | Re-tested in my own browser |
+| Demo video | Drove an automated browser to record the video and created the English subtitles | Reviewed the video |
+| Documentation | Wrote the README and this report, exported the PDF | Provided my personal details and reviewed the content |
 
-Các commit có sự hỗ trợ của AI đều ghi dòng `Co-Authored-By: Claude` trong lịch sử Git. Em hiểu toàn bộ mã nguồn và chịu trách nhiệm về nội dung nộp.
+Every AI-assisted commit includes a `Co-Authored-By: Claude` line in the Git history. I understand the full source code and take responsibility for everything submitted.
 
 ## 5. Git Commit History
-Lệnh: `git log --pretty=format:"%h | %ad | %s" --date=format:"%Y-%m-%d %H:%M"`
+Command: `git log --pretty=format:"%h | %ad | %s" --date=format:"%Y-%m-%d %H:%M"`
 
 ```
+fd89703 | 2026-11-25 02:03 | Rewrite README in English
+3318993 | 2026-11-25 01:58 | Hoàn thiện báo cáo (MD + PDF) kèm ảnh chụp màn hình
 68c54cb | 2026-11-25 01:57 | Thêm video demo (phụ đề tiếng Anh) và cập nhật README
 47f79eb | 2026-11-25 01:44 | Thêm đăng nhập/đăng ký bằng Email & mật khẩu (Firebase Auth)
 5fd9c93 | 2026-11-25 01:36 | Liên kết project Firebase smart-vocab-d4665
@@ -184,4 +186,20 @@ f2a4d9a | 2026-11-25 01:04 | Tích hợp Google Translate API: dịch văn bản
 16ead81 | 2026-11-25 01:03 | Tạo khung giao diện: layout HTML và CSS
 ```
 
-Lịch sử đầy đủ (kể cả các commit sau khi báo cáo này được tạo): https://github.com/KBFrom0/Private_ComputationalThinking/commits/main
+Earlier commit messages are in Vietnamese. English translations:
+
+| Commit | Meaning |
+|--------|---------|
+| `3318993` | Finalize the report (MD + PDF) with screenshots |
+| `68c54cb` | Add demo video (English subtitles) and update README |
+| `47f79eb` | Add Email & password sign-in/registration (Firebase Auth) |
+| `5fd9c93` | Link the Firebase project smart-vocab-d4665 |
+| `8f9fd84` | Add the submission report docs/REPORT.md |
+| `6d9b23a` | Fix the result box not hiding, add favicon, adjust sign-in button color |
+| `3e04ad9` | Add Firestore security rules, Hosting config, and setup README |
+| `7bc04b6` | Add flashcard review mode: flip cards, mark learned / not yet |
+| `ca1da3e` | Integrate Firebase: Google sign-in, save/delete/mark words in Firestore (realtime) |
+| `f2a4d9a` | Integrate Google Translate API: translate text, select/swap languages |
+| `16ead81` | Create the UI skeleton: HTML layout and CSS |
+
+Full history (including commits made after this report): https://github.com/KBFrom0/Private_ComputationalThinking/commits/main
