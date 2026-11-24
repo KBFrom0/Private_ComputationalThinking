@@ -14,7 +14,7 @@ A web app that looks up meanings with the **Google Translate API**, saves words 
 
 ## Project structure
 ```
-smart-vocab/
+23125084_W07_01/
 ├── index.html            # UI
 ├── css/style.css
 ├── js/
