@@ -1,65 +1,65 @@
-# 📘 Smart Vocab – Sổ từ vựng thông minh
+# 📘 Smart Vocab – Smart Vocabulary Notebook
 
-Web app giúp tra nghĩa bằng **Google Translate API**, lưu từ vào sổ từ cá nhân trên **Firebase** (Authentication + Cloud Firestore) và ôn tập bằng **Flashcard**.
+A web app that looks up meanings with the **Google Translate API**, saves words to a personal notebook on **Firebase** (Authentication + Cloud Firestore), and helps you review them with **flashcards**.
 
 - 🌐 **Live demo:** https://smart-vocab-d4665.web.app
-- 🎬 **Video demo (phụ đề tiếng Anh):** [`docs/demo.mp4`](docs/demo.mp4)
-- 📄 **Báo cáo:** [`docs/REPORT.md`](docs/REPORT.md) · [`docs/REPORT.pdf`](docs/REPORT.pdf)
+- 🎬 **Demo video (English subtitles):** [`docs/demo.mp4`](docs/demo.mp4)
+- 📄 **Report:** [`docs/REPORT.md`](docs/REPORT.md) · [`docs/REPORT.pdf`](docs/REPORT.pdf)
 
-## Chức năng
-1. **Tra & dịch**: dịch từ hoặc câu giữa 8 ngôn ngữ, tự nhận diện ngôn ngữ nguồn.
-2. **Đăng nhập** bằng Google hoặc Email/Mật khẩu (Firebase Authentication).
-3. **Sổ từ cá nhân** (Cloud Firestore): lưu, xóa, tìm kiếm, lọc, đánh dấu "đã thuộc". Dữ liệu đồng bộ realtime.
-4. **Flashcard**: lật thẻ để xem nghĩa, đánh dấu "đã thuộc" hoặc "chưa thuộc".
+## Features
+1. **Translate**: translate words or sentences between 8 languages, with automatic source-language detection.
+2. **Sign in** with Google or Email/Password (Firebase Authentication).
+3. **Personal notebook** (Cloud Firestore): save, delete, search, filter, and mark words as learned. Data syncs in realtime.
+4. **Flashcards**: flip a card to see the meaning, then mark it as "learned" or "not yet".
 
-## Cấu trúc
+## Project structure
 ```
 smart-vocab/
-├── index.html            # Giao diện
+├── index.html            # UI
 ├── css/style.css
 ├── js/
-│   ├── app.js            # Logic giao diện
-│   ├── translate.js      # Gọi Google Translate API
+│   ├── app.js            # UI logic
+│   ├── translate.js      # Google Translate API calls
 │   ├── firebase.js       # Firebase Auth + Firestore
-│   ├── config.example.js # Mẫu cấu hình (commit)
-│   └── config.js         # Cấu hình thật (KHÔNG commit)
-├── firestore.rules       # Luật bảo mật Firestore
-└── firebase.json         # Cấu hình Firebase Hosting
+│   ├── config.example.js # Config template (committed)
+│   └── config.js         # Real config (NOT committed)
+├── firestore.rules       # Firestore security rules
+└── firebase.json         # Firebase Hosting config
 ```
 
-## Cài đặt & chạy
+## Setup & run
 
-### 1. Tạo cấu hình
+### 1. Create the config file
 ```bash
 cp js/config.example.js js/config.js
 ```
 
 ### 2. Firebase
-1. Vào https://console.firebase.google.com và tạo project.
-2. **Build → Authentication → Sign-in method** và bật **Google** và **Email/Password**.
-3. **Build → Firestore Database → Create database**, rồi dán nội dung `firestore.rules` vào tab **Rules**.
-4. **Project settings → Your apps → Web (</>)**, rồi copy `firebaseConfig` vào `js/config.js`.
+1. Go to https://console.firebase.google.com and create a project.
+2. **Build → Authentication → Sign-in method**, then enable **Google** and **Email/Password**.
+3. **Build → Firestore Database → Create database**, then paste the contents of `firestore.rules` into the **Rules** tab.
+4. **Project settings → Your apps → Web (</>)**, then copy `firebaseConfig` into `js/config.js`.
 
 ### 3. Google Translate API
-1. Vào https://console.cloud.google.com, chọn project (có thể dùng chung project Firebase).
-2. **APIs & Services → Library**, rồi bật **Cloud Translation API**.
-3. **Credentials → Create credentials → API key**, rồi dán vào `TRANSLATE_API_KEY` trong `js/config.js`.
-   Nên giới hạn key theo HTTP referrer (domain của web).
+1. Go to https://console.cloud.google.com and select your project (you can reuse the Firebase project).
+2. **APIs & Services → Library**, then enable **Cloud Translation API**.
+3. **Credentials → Create credentials → API key**, then paste the key into `TRANSLATE_API_KEY` in `js/config.js`.
+   It is recommended to restrict the key by HTTP referrer (your site's domain).
 
-> Nếu để trống `TRANSLATE_API_KEY`, app sẽ dùng endpoint công khai `translate.googleapis.com/translate_a/single`. Endpoint này không cần key nhưng có thể bị Google chặn.
+> If `TRANSLATE_API_KEY` is left empty, the app falls back to the public endpoint `translate.googleapis.com/translate_a/single`. It needs no key, but Google may block it.
 
-### 4. Chạy local
-App dùng ES Modules nên phải chạy qua HTTP server, không mở trực tiếp file `index.html`:
+### 4. Run locally
+The app uses ES Modules, so it must be served over HTTP. Opening `index.html` directly as a file will not work:
 ```bash
 npx serve .
-# hoặc dùng extension "Live Server" của VS Code
+# or use the "Live Server" extension in VS Code
 ```
-Mở http://localhost:3000.
+Then open http://localhost:3000.
 
-### 5. Deploy (tùy chọn)
+### 5. Deploy (optional)
 ```bash
 npm install -g firebase-tools
 firebase login
-firebase use --add      # chọn project
+firebase use --add      # select your project
 firebase deploy
 ```
