@@ -145,7 +145,8 @@ See `README.md` for details. In short:
 
 ## 3. Video Demonstration
 - Video (about 2 minutes, English subtitles): https://github.com/KBFrom0/Private_ComputationalThinking/blob/main/docs/demo.mp4
-- Separate subtitle file: `docs/demo-subtitles-en.srt`
+- Vietnamese-subtitled version: https://github.com/KBFrom0/Private_ComputationalThinking/blob/main/docs/demo-vi.mp4
+- Separate subtitle files: `docs/demo-subtitles-en.srt`, `docs/demo-subtitles-vi.srt`
 - Video content:
   1. Translate the word *serendipity* (auto-detected English → Vietnamese), then a Vietnamese sentence → Japanese.
   2. Sign in with Firebase Authentication (Email/Password).

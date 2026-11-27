@@ -3,7 +3,7 @@
 A web app that looks up meanings with the **Google Translate API**, saves words to a personal notebook on **Firebase** (Authentication + Cloud Firestore), and helps you review them with **flashcards**.
 
 - 🌐 **Live demo:** https://smart-vocab-d4665.web.app
-- 🎬 **Demo video (English subtitles):** [`docs/demo.mp4`](docs/demo.mp4)
+- 🎬 **Demo video:** [English subtitles](docs/demo.mp4) · [Vietnamese subtitles](docs/demo-vi.mp4)
 - 📄 **Report:** [`docs/REPORT.md`](docs/REPORT.md) · [`docs/REPORT.pdf`](docs/REPORT.pdf)
 
 ## Features

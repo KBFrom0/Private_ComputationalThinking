@@ -1,0 +1,52 @@
+1
+00:00:00,000 --> 00:00:04,665
+Smart Vocab – Sổ từ vựng thông minh, sử dụng Google Translate API và Firebase
+
+2
+00:00:04,715 --> 00:00:10,240
+Bước 1: Dịch từ bằng Google Translate API (tự nhận diện ngôn ngữ nguồn)
+
+3
+00:00:10,290 --> 00:00:18,728
+Dịch được cả câu, ví dụ: tiếng Việt sang tiếng Nhật
+
+4
+00:00:18,778 --> 00:00:32,838
+Bước 2: Đăng nhập bằng Firebase Authentication (Email/Mật khẩu – có hỗ trợ cả Google)
+
+5
+00:00:32,888 --> 00:00:46,921
+Bước 3: Lưu từ vào Cloud Firestore – mỗi người dùng có một sổ từ riêng
+
+6
+00:00:46,971 --> 00:00:51,831
+Sổ từ cập nhật realtime nhờ Firestore onSnapshot – dữ liệu lưu tại users/{uid}/words
+
+7
+00:00:51,881 --> 00:00:56,170
+Tìm kiếm từ trong sổ
+
+8
+00:00:56,220 --> 00:01:11,347
+Đánh dấu từ đã thuộc, sau đó lọc theo "Đang học" / "Đã thuộc"
+
+9
+00:01:11,397 --> 00:01:25,217
+Bước 4: Ôn tập bằng Flashcard – bấm vào thẻ để lật xem nghĩa
+
+10
+00:01:25,267 --> 00:01:33,646
+Bấm "Đã thuộc" / "Chưa thuộc" sẽ cập nhật trạng thái và số lần ôn lên Firestore
+
+11
+00:01:33,696 --> 00:01:40,962
+Dữ liệu lưu trên cloud: tải lại trang, sổ từ vẫn còn nguyên
+
+12
+00:01:41,012 --> 00:01:44,472
+Đăng xuất – sổ từ là riêng tư, bị ẩn khi chưa đăng nhập
+
+13
+00:01:44,522 --> 00:01:51,600
+Website: https://smart-vocab-d4665.web.app – Cảm ơn thầy đã xem!
+
